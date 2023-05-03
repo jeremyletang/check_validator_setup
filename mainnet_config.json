@@ -5,6 +5,72 @@
 	    "grpc": "tls://vega-mainnet-data-grpc.commodum.io:443",
 	    "gql": "https://vega-mainnet-data-graphql.commodum.io/query",
 	    "rest": "https://vega-mainnet-data-rest.commodum.io"
+	},
+	{
+	    "name": "lovali",
+	    "grpc": "tls://vega-grpc.mainnet.lovali.xyz:443",
+	    "gql": "https://vega-query.mainnet.lovali.xyz/query",
+	    "rest": "https://vega-rest.mainnet.lovali.xyz"
+	},
+	{
+	    "name": "bharvest",
+	    "grpc": "vega-grpc.bharvest.io:3007",
+	    "gql": "https://vega-graphql.bharvest.io/query",
+	    "rest": "https://vega-rest.bharvest.io"
+	},
+	{
+	    "name": "nodesguru",
+	    "grpc": "vega-data.nodes.guru:3007",
+	    "gql": "https://vega-data.nodes.guru:3008/query",
+	    "rest": "http://vega-data.nodes.guru:3009"
+	},
+	{
+	    "name": "p2p",
+	    "grpc": "tls://grpc.velvet.tm.p2p.org:443",
+	    "gql": "https://gql.velvet.tm.p2p.org:443/query",
+	    "rest": "https://rest.velvet.tm.p2p.org:443"
+	},
+	{
+	    "name": "rockaway",
+	    "grpc": "rockaway.mainnet.vega.community:3007",
+	    "gql": "http://rockaway.mainnet.vega.community:3008/query",
+	    "rest": "http://rockaway.mainnet.vega.community:3009"
+	},
+	{
+	    "name": "gf1",
+	    "grpc": "vega.greenfield.xyz:3007",
+	    "gql": "https://vega.greenfield.xyz:443/query",
+	    "rest": "https://vega.greenfield.xyz:3009"
+	},
+	{
+	    "name": "xprv",
+	    "grpc": "tls://grpc.vega.xprv.io:443",
+	    "gql": "https://vega.xprv.io/datanode/query",
+	    "rest": "http://vega.xprv.io/datanode"
+	},
+	{
+	    "name": "stakingcabin",
+	    "grpc": "vega.mainnet.stakingcabin.com:3007",
+	    "gql": "https://vega.mainnet.stakingcabin.com/query",
+	    "rest": "http://vega.mainnet.stakingcabin.com:3009"
+	},
+	{
+	    "name": "anyvalid",
+	    "grpc": "vega-mainnet.anyvalid.com:3002",
+	    "gql": "",
+	    "rest": "http://vega-mainnet.anyvalid.com:3003"
+	},
+	{
+	    "name": "blockscope",
+	    "grpc": "mainnet.vega.blockscope.net:3007",
+	    "gql": "http://mainnet.vega.blockscope.net:3008/query",
+	    "rest": "http://mainnet.vega.blockscope.net:3009"
+	},
+	{
+	    "name": "gpvalidator",
+	    "grpc": "grpcvega.gpvalidator.com:3007",
+	    "gql": "http://graphqlvega.gpvalidator.com:3008/query",
+	    "rest": "http://restvega.gpvalidator.com:3009"
 	}
     ]
 }
