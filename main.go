@@ -35,6 +35,7 @@ var (
 
 	testnetConfig bool
 	only          string
+	output        string
 )
 
 type config struct {
@@ -46,9 +47,21 @@ type config struct {
 	} `json:"validators"`
 }
 
+type aPIResult struct {
+	API       string        `json:"api"`
+	TimeTaken time.Duration `json:"time_taken"`
+	Error     string        `json:"error"`
+}
+
+type results struct {
+	Name       string      `json:"name"`
+	APIResults []aPIResult `json:"api_results"`
+}
+
 func init() {
 	flag.BoolVar(&testnetConfig, "testnet", false, "check testnet")
 	flag.StringVar(&only, "only", "", "check a single validator")
+	flag.StringVar(&output, "output", "human", "results output [human|json]")
 }
 
 func main() {
@@ -59,6 +72,17 @@ func main() {
 	}
 	if len(only) > 0 {
 		only = strings.ToLower(only)
+	}
+
+	var isJsonOutput bool
+	switch output {
+	case "human":
+		break
+	case "json":
+		isJsonOutput = true
+		break
+	default:
+		log.Fatalf("invalid output format: %v", output)
 	}
 
 	cfg := config{}
@@ -81,69 +105,135 @@ func main() {
 		}
 	}
 
-	t := table.NewWriter()
-	t.AppendHeader(table.Row{"validator", "core", "datanode", "rest", "graphql"})
-
-	t2 := table.NewWriter()
-	t2.AppendHeader(table.Row{"validator", "api", "error"})
-
-	green := color.New(color.FgGreen).SprintFunc()
-	red := color.New(color.FgRed).SprintFunc()
-
 	var bar *progressbar.ProgressBar
-	if len(only) > 0 {
-		bar = progressbar.Default(4)
-	} else {
-		bar = progressbar.Default(int64(len(cfg.Validators) * 4))
+	if !isJsonOutput {
+		if len(only) > 0 {
+			bar = progressbar.Default(4)
+		} else {
+			bar = progressbar.Default(int64(len(cfg.Validators) * 4))
+		}
 	}
+
+	res := []results{}
 
 	for _, v := range cfg.Validators {
 		if len(only) > 0 && !strings.EqualFold(only, v.Name) {
 			continue
 		}
 
-		var core, dn, rest, gql string
+		newRes := results{
+			Name: v.Name,
+		}
+
+		errStr := ""
 		timeTaken, err := checkGRPC(v.GRPC)
 		if err != nil {
-			core = red(timeTaken.String())
-			t2.AppendRow(table.Row{v.Name, "core", err.Error()})
-		} else {
-			core = green(timeTaken.String())
+			errStr = err.Error()
 		}
-		bar.Add(1)
+		newRes.APIResults = append(newRes.APIResults, aPIResult{
+			API:       "core",
+			TimeTaken: timeTaken,
+			Error:     errStr,
+		})
+		if !isJsonOutput {
+			bar.Add(1)
+		}
 
+		errStr = ""
 		timeTaken, err = checkGRPCDN(v.GRPC)
 		if err != nil {
-			dn = red(timeTaken.String())
-			t2.AppendRow(table.Row{v.Name, "datanode", err.Error()})
-		} else {
-			dn = green(timeTaken.String())
+			errStr = err.Error()
 		}
-		bar.Add(1)
+		newRes.APIResults = append(newRes.APIResults, aPIResult{
+			API:       "datanode",
+			TimeTaken: timeTaken,
+			Error:     errStr,
+		})
+		if !isJsonOutput {
+			bar.Add(1)
+		}
 
+		errStr = ""
 		timeTaken, err = checkREST(v.REST)
 		if err != nil {
-			rest = red(timeTaken.String())
-			t2.AppendRow(table.Row{v.Name, "rest", err.Error()})
-		} else {
-			rest = green(timeTaken.String())
+			errStr = err.Error()
 		}
-		bar.Add(1)
+		newRes.APIResults = append(newRes.APIResults, aPIResult{
+			API:       "rest",
+			TimeTaken: timeTaken,
+			Error:     errStr,
+		})
 
+		if !isJsonOutput {
+			bar.Add(1)
+		}
+
+		errStr = ""
 		timeTaken, err = checkGQL(v.GQL)
 		if err != nil {
-			gql = red(timeTaken.String())
-			t2.AppendRow(table.Row{v.Name, "gql", err.Error()})
-		} else {
-			gql = green(timeTaken.String())
+			errStr = err.Error()
 		}
-		bar.Add(1)
+		newRes.APIResults = append(newRes.APIResults, aPIResult{
+			API:       "gql",
+			TimeTaken: timeTaken,
+			Error:     errStr,
+		})
+		if !isJsonOutput {
+			bar.Add(1)
+		}
 
-		t.AppendRow(table.Row{v.Name, core, dn, rest, gql})
+		res = append(res, newRes)
+	}
+
+	if output == "human" {
+		printResults(res)
+	} else {
+		buf, err := json.Marshal(res)
+		if err != nil {
+			log.Fatalf("could not format output: %v", err)
+		}
+		fmt.Printf("%v\n", string(buf))
+	}
+}
+
+func printResults(results []results) {
+	t := table.NewWriter()
+	t.AppendHeader(table.Row{"validator", "core", "datanode", "rest", "graphql"})
+
+	t2 := table.NewWriter()
+	t2.AppendHeader(table.Row{"validator", "api", "error"})
+
+	for _, v := range results {
+		resMap := map[string]aPIResult{}
+		for _, vr := range v.APIResults {
+			resMap[vr.API] = vr
+			if len(vr.Error) > 0 {
+				t2.AppendRow(table.Row{v.Name, vr.API, vr.Error})
+			}
+		}
+
+		t.AppendRow(table.Row{
+			v.Name,
+			coloredDuration(resMap["core"]),
+			coloredDuration(resMap["datanode"]),
+			coloredDuration(resMap["rest"]),
+			coloredDuration(resMap["gql"]),
+		})
 	}
 
 	fmt.Println(t.Render())
 	fmt.Println(t2.Render())
+}
+
+func coloredDuration(res aPIResult) string {
+	green := color.New(color.FgGreen).SprintFunc()
+	red := color.New(color.FgRed).SprintFunc()
+
+	if len(res.Error) > 0 {
+		return red(res.TimeTaken.String())
+	}
+
+	return green(res.TimeTaken.String())
 }
 
 func checkREST(address string) (time.Duration, error) {
