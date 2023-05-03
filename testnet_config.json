@@ -32,9 +32,9 @@
 	},
 	{
 	    "name": "commodum",
-	    "grpc": "tls://vega-testnet-data-grpc.commodum.io:443",
-	    "gql": "https://vega-testnet-data-graphql.commodum.io/graphql",
-	    "rest": "https://vega-testnet-data-graphql.commodum.io"
+	    "grpc": "vega-testnet-data.commodum.io:3007",
+	    "gql": "https://vega-testnet-data.commodum.io/graphql",
+	    "rest": "https://vega-testnet-data.commodum.io"
 	},
 	{
 	    "name": "lovali",
