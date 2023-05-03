@@ -1,0 +1,10 @@
+{
+    "validators": [
+	{
+	    "name": "commodum",
+	    "grpc": "tls://vega-mainnet-data-grpc.commodum.io:443",
+	    "gql": "https://vega-mainnet-data-graphql.commodum.io/query",
+	    "rest": "https://vega-mainnet-data-rest.commodum.io"
+	}
+    ]
+}

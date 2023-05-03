@@ -5,6 +5,7 @@ import (
 	"context"
 	_ "embed"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -23,8 +24,11 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-//go:embed config.json
-var buf []byte
+//go:embed testnet_config.json
+var testnetBuf []byte
+
+//go:embed mainnet_config.json
+var mainnetBuf []byte
 
 const gqlPayload = `{"query": "{epoch{id}}"}`
 
@@ -37,7 +41,26 @@ type config struct {
 	} `json:"validators"`
 }
 
+var (
+	testnetConfig bool
+	only          string
+)
+
+func init() {
+	flag.BoolVar(&testnetConfig, "testnet", false, "check testnet")
+	flag.StringVar(&only, "only", "", "check a single validator")
+}
+
 func main() {
+	flag.Parse()
+	var buf = mainnetBuf
+	if testnetConfig {
+		buf = testnetBuf
+	}
+	if len(only) > 0 {
+		only = strings.ToLower(only)
+	}
+
 	cfg := config{}
 	err := json.Unmarshal(buf, &cfg)
 	if err != nil {
@@ -53,9 +76,17 @@ func main() {
 	green := color.New(color.FgGreen).SprintFunc()
 	red := color.New(color.FgRed).SprintFunc()
 
-	bar := progressbar.Default(int64(len(cfg.Validators) * 4))
-
+	var bar *progressbar.ProgressBar
+	if len(only) > 0 {
+		bar = progressbar.Default(4)
+	} else {
+		bar = progressbar.Default(int64(len(cfg.Validators) * 4))
+	}
 	for _, v := range cfg.Validators {
+		if len(only) > 0 && !strings.EqualFold(only, v.Name) {
+			continue
+		}
+
 		var core, dn, rest, gql string
 		timeTaken, err := checkGRPC(v.GRPC)
 		if err != nil {

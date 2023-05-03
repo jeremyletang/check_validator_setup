@@ -22,7 +22,7 @@
 	    "name": "nodesguru",
 	    "grpc": "vega-testnet.nodes.guru:3007",
 	    "gql": "https://vega-testnet.nodes.guru:3008/graphql",
-	    "rest": "https://vega-testnet.nodes.guru:3009"
+	    "rest": "https://vega-testnet.nodes.guru:3008"
 	},
 	{
 	    "name": "gf1",
