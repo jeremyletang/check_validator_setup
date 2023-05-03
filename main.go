@@ -16,7 +16,7 @@ import (
 	apipb "code.vegaprotocol.io/vega/protos/vega/api/v1"
 
 	"github.com/fatih/color"
-	"github.com/rodaine/table"
+	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/schollz/progressbar/v3"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -44,10 +44,11 @@ func main() {
 		log.Fatalf("invalid configuration: %v", err)
 	}
 
-	columnFmt := color.New(color.FgYellow).SprintfFunc()
-	headerFmt := color.New(color.FgWhite, color.Underline).SprintfFunc()
-	tbl := table.New("name", "core", "datanode", "rest", "graphql")
-	tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
+	t := table.NewWriter()
+	t.AppendHeader(table.Row{"validator", "core", "datanode", "rest", "graphql"})
+
+	t2 := table.NewWriter()
+	t2.AppendHeader(table.Row{"validator", "api", "error"})
 
 	green := color.New(color.FgGreen).SprintFunc()
 	red := color.New(color.FgRed).SprintFunc()
@@ -59,6 +60,7 @@ func main() {
 		timeTaken, err := checkGRPC(v.GRPC)
 		if err != nil {
 			core = red(timeTaken.String())
+			t2.AppendRow(table.Row{v.Name, "core", err.Error()})
 		} else {
 			core = green(timeTaken.String())
 		}
@@ -67,6 +69,7 @@ func main() {
 		timeTaken, err = checkGRPCDN(v.GRPC)
 		if err != nil {
 			dn = red(timeTaken.String())
+			t2.AppendRow(table.Row{v.Name, "datanode", err.Error()})
 		} else {
 			dn = green(timeTaken.String())
 		}
@@ -75,6 +78,7 @@ func main() {
 		timeTaken, err = checkREST(v.REST)
 		if err != nil {
 			rest = red(timeTaken.String())
+			t2.AppendRow(table.Row{v.Name, "rest", err.Error()})
 		} else {
 			rest = green(timeTaken.String())
 		}
@@ -83,15 +87,17 @@ func main() {
 		timeTaken, err = checkGQL(v.GQL)
 		if err != nil {
 			gql = red(timeTaken.String())
+			t2.AppendRow(table.Row{v.Name, "gql", err.Error()})
 		} else {
 			gql = green(timeTaken.String())
 		}
 		bar.Add(1)
 
-		tbl.AddRow(v.Name, core, dn, rest, gql)
+		t.AppendRow(table.Row{v.Name, core, dn, rest, gql})
 	}
 
-	tbl.Print()
+	fmt.Println(t.Render())
+	fmt.Println(t2.Render())
 }
 
 func checkREST(address string) (time.Duration, error) {
