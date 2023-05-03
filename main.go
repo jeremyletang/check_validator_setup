@@ -24,13 +24,18 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-//go:embed testnet_config.json
-var testnetBuf []byte
-
-//go:embed mainnet_config.json
-var mainnetBuf []byte
-
 const gqlPayload = `{"query": "{epoch{id}}"}`
+
+var (
+	//go:embed testnet_config.json
+	testnetBuf []byte
+
+	//go:embed mainnet_config.json
+	mainnetBuf []byte
+
+	testnetConfig bool
+	only          string
+)
 
 type config struct {
 	Validators []struct {
@@ -40,11 +45,6 @@ type config struct {
 		GQL  string `json:"gql"`
 	} `json:"validators"`
 }
-
-var (
-	testnetConfig bool
-	only          string
-)
 
 func init() {
 	flag.BoolVar(&testnetConfig, "testnet", false, "check testnet")
@@ -67,6 +67,20 @@ func main() {
 		log.Fatalf("invalid configuration: %v", err)
 	}
 
+	// validate only is a correct validator if specified
+	if len(only) > 0 {
+		var exists bool
+		for _, v := range cfg.Validators {
+			if strings.EqualFold(only, v.Name) {
+				exists = true
+				break
+			}
+		}
+		if !exists {
+			log.Fatalf("not an existing validator: %v", only)
+		}
+	}
+
 	t := table.NewWriter()
 	t.AppendHeader(table.Row{"validator", "core", "datanode", "rest", "graphql"})
 
@@ -82,6 +96,7 @@ func main() {
 	} else {
 		bar = progressbar.Default(int64(len(cfg.Validators) * 4))
 	}
+
 	for _, v := range cfg.Validators {
 		if len(only) > 0 && !strings.EqualFold(only, v.Name) {
 			continue
