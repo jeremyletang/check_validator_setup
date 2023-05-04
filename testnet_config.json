@@ -27,8 +27,8 @@
 	{
 	    "name": "gf1",
 	    "grpc": "testnet.vega.greenfield.xyz:3007",
-	    "gql": "https://testnet.vega.greenfield.xyz:443/query",
-	    "rest": "https://testnet.vega.greenfield.xyz:3009"
+	    "gql": "https://testnet.vega.greenfield.xyz/graphql",
+	    "rest": "https://testnet.vega.greenfield.xyz"
 	},
 	{
 	    "name": "commodum",

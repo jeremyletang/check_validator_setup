@@ -80,7 +80,6 @@ func main() {
 		break
 	case "json":
 		isJsonOutput = true
-		break
 	default:
 		log.Fatalf("invalid output format: %v", output)
 	}
@@ -261,10 +260,7 @@ func checkREST(address string) (time.Duration, error) {
 }
 
 func checkGQL(address string) (time.Duration, error) {
-	s, err := url.JoinPath(address, "graphql")
-	if err != nil {
-		return 0, err
-	}
+	s := address
 
 	now := time.Now()
 
@@ -274,7 +270,6 @@ func checkGQL(address string) (time.Duration, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, s, bytes.NewBuffer([]byte(gqlPayload)))
 	if err == nil {
 		req.Header.Add("Content-Type", "application/json")
-
 		resp, err := http.DefaultClient.Do(req)
 		if err != nil {
 			return time.Since(now), err
