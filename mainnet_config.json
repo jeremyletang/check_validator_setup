@@ -79,12 +79,6 @@
 	    "rest": "http://vega-mainnet.anyvalid.com:3003"
 	},
 	{
-	    "name": "blockscope",
-	    "grpc": "mainnet.vega.blockscope.net:3007",
-	    "gql": "http://mainnet.vega.blockscope.net:3008/query",
-	    "rest": "http://mainnet.vega.blockscope.net:3009"
-	},
-	{
 	    "name": "gpvalidator",
 	    "grpc": "grpcvega.gpvalidator.com:3007",
 	    "gql": "http://graphqlvega.gpvalidator.com:3008/query",
@@ -92,6 +86,12 @@
 	},
 	{
 	    "name": "darling",
+	    "grpc": "darling.network:3007",
+	    "gql": "https://darling.network/graphql",
+	    "rest": "https://darling.network"
+	},
+	{
+	    "name": "aurora",
 	    "grpc": "darling.network:3007",
 	    "gql": "https://darling.network/graphql",
 	    "rest": "https://darling.network"
