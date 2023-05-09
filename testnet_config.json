@@ -32,7 +32,7 @@
 	},
 	{
 	    "name": "commodum",
-	    "grpc": "vega-testnet-data.commodum.io:3007",
+	    "grpc": "tls://vega-testnet-data-grpc.commodum.io:443",
 	    "gql": "https://vega-testnet-data.commodum.io/graphql",
 	    "rest": "https://vega-testnet-data.commodum.io"
 	},
