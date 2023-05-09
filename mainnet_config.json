@@ -26,9 +26,9 @@
 	},
 	{
 	    "name": "lovali",
-	    "grpc": "tls://vega-grpc.mainnet.lovali.xyz:443",
-	    "gql": "https://vega-query.mainnet.lovali.xyz/query",
-	    "rest": "https://vega-rest.mainnet.lovali.xyz"
+	    "grpc": "vega-grpc.mainnet.lovali.xyz:3007",
+	    "gql": "https://vega-query.mainnet.lovali.xyz/graphql",
+	    "rest": "https://vega-query.mainnet.lovali.xyz"
 	},
 	{
 	    "name": "bharvest",
