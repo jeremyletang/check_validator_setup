@@ -75,8 +75,8 @@
 	{
 	    "name": "anyvalid",
 	    "grpc": "vega-mainnet.anyvalid.com:3002",
-	    "gql": "",
-	    "rest": "http://vega-mainnet.anyvalid.com:3003"
+	    "gql": "https://vega-mainnet.anyvalid.com/graphql",
+	    "rest": "https://vega-mainnet.anyvalid.com:3003"
 	},
 	{
 	    "name": "gpvalidator",
