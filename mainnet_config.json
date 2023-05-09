@@ -39,8 +39,8 @@
 	{
 	    "name": "nodesguru",
 	    "grpc": "vega-data.nodes.guru:3007",
-	    "gql": "https://vega-data.nodes.guru:3008/query",
-	    "rest": "http://vega-data.nodes.guru:3009"
+	    "gql": "https://vega-data.nodes.guru:3008/graphql",
+	    "rest": "https://vega-data.nodes.guru:3008"
 	},
 	{
 	    "name": "p2p",
