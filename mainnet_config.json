@@ -45,8 +45,8 @@
 	{
 	    "name": "p2p",
 	    "grpc": "tls://grpc.velvet.tm.p2p.org:443",
-	    "gql": "https://gql.velvet.tm.p2p.org:443/query",
-	    "rest": "https://rest.velvet.tm.p2p.org:443"
+	    "gql": "https://gql.velvet.tm.p2p.org/graphql",
+	    "rest": "https://rest.velvet.tm.p2p.org"
 	},
 	{
 	    "name": "rockaway",
