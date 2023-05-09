@@ -81,8 +81,8 @@
 	{
 	    "name": "gpvalidator",
 	    "grpc": "grpcvega.gpvalidator.com:3007",
-	    "gql": "http://graphqlvega.gpvalidator.com:3008/query",
-	    "rest": "http://restvega.gpvalidator.com:3009"
+	    "gql": "http://graphqlvega.gpvalidator.com:3008/graphql",
+	    "rest": "http://restvega.gpvalidator.com:3008"
 	},
 	{
 	    "name": "darling",
