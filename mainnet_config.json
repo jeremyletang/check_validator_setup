@@ -1,6 +1,24 @@
 {
     "validators": [
 	{
+	    "name": "vega0",
+	    "grpc": "api0.vega.community:3007",
+	    "gql": "https://api0.vega.community/graphql",
+	    "rest": "https://api0.vega.community"
+	},
+	{
+	    "name": "vega1",
+	    "grpc": "api1.vega.community:3007",
+	    "gql": "https://api1.vega.community/graphql",
+	    "rest": "https://api1.vega.community"
+	},
+	{
+	    "name": "vega2",
+	    "grpc": "api2.vega.community:3007",
+	    "gql": "https://api2.vega.community/graphql",
+	    "rest": "https://api2.vega.community"
+	},
+	{
 	    "name": "commodum",
 	    "grpc": "tls://vega-mainnet-data-grpc.commodum.io:443",
 	    "gql": "https://vega-mainnet-data.commodum.io/graphql",
