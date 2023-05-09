@@ -33,6 +33,8 @@ var (
 	//go:embed mainnet_config.json
 	mainnetBuf []byte
 
+	timeout = 2 * time.Second
+
 	testnetConfig bool
 	only          string
 	output        string
@@ -243,7 +245,7 @@ func checkREST(address string) (time.Duration, error) {
 
 	now := time.Now()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, s, nil)
@@ -264,7 +266,7 @@ func checkGQL(address string) (time.Duration, error) {
 
 	now := time.Now()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, s, bytes.NewBuffer([]byte(gqlPayload)))
@@ -302,7 +304,7 @@ func checkGRPC(address string) (time.Duration, error) {
 
 	connCore := apipb.NewCoreServiceClient(connection)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	_, err = connCore.Statistics(ctx, &apipb.StatisticsRequest{})
 
@@ -328,7 +330,7 @@ func checkGRPCDN(address string) (time.Duration, error) {
 	now := time.Now()
 
 	connDT := dnapipb.NewTradingDataServiceClient(connection)
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	_, err = connDT.Info(ctx, &dnapipb.InfoRequest{})
 

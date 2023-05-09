@@ -89,6 +89,12 @@
 	    "grpc": "grpcvega.gpvalidator.com:3007",
 	    "gql": "http://graphqlvega.gpvalidator.com:3008/query",
 	    "rest": "http://restvega.gpvalidator.com:3009"
+	},
+	{
+	    "name": "darling",
+	    "grpc": "darling.network:3007",
+	    "gql": "https://darling.network/graphql",
+	    "rest": "https://darling.network"
 	}
     ]
 }
