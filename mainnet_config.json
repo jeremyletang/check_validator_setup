@@ -46,7 +46,7 @@
 	    "name": "xprv",
 	    "grpc": "tls://grpc.vega.xprv.io:443",
 	    "gql": "https://vega.xprv.io/datanode/query",
-	    "rest": "http://vega.xprv.io/datanode"
+	    "rest": "https://vega.xprv.io/datanode"
 	},
 	{
 	    "name": "stakingcabin",
