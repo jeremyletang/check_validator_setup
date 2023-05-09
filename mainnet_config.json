@@ -52,7 +52,7 @@
 	    "name": "rockaway",
 	    "grpc": "vega-data-mainnet.rockrpc.net:3007",
 	    "gql": "https://vega-data-mainnet.rockrpc.net/graphql",
-	    "rest": "http://vega-data-mainnet.rockrpc.net:3009"
+	    "rest": "https://vega-data-mainnet.rockrpc.net"
 	},
 	{
 	    "name": "gf1",
