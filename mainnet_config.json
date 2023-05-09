@@ -50,15 +50,15 @@
 	},
 	{
 	    "name": "rockaway",
-	    "grpc": "rockaway.mainnet.vega.community:3007",
-	    "gql": "http://rockaway.mainnet.vega.community:3008/query",
-	    "rest": "http://rockaway.mainnet.vega.community:3009"
+	    "grpc": "vega-data-mainnet.rockrpc.net:3007",
+	    "gql": "https://vega-data-mainnet.rockrpc.net/graphql",
+	    "rest": "http://vega-data-mainnet.rockrpc.net:3009"
 	},
 	{
 	    "name": "gf1",
 	    "grpc": "vega.greenfield.xyz:3007",
-	    "gql": "https://vega.greenfield.xyz:443/query",
-	    "rest": "https://vega.greenfield.xyz:3009"
+	    "gql": "https://vega.greenfield.xyz/graphql",
+	    "rest": "https://vega.greenfield.xyz"
 	},
 	{
 	    "name": "xprv",
@@ -92,9 +92,9 @@
 	},
 	{
 	    "name": "aurora",
-	    "grpc": "darling.network:3007",
-	    "gql": "https://darling.network/graphql",
-	    "rest": "https://darling.network"
+	    "grpc": "tls://vega-grpc.aurora-edge.com:443",
+	    "gql": "https://vega.aurora-edge.com/graphql",
+	    "rest": "https://vega.aurora-edge.com"
 	}
     ]
 }
