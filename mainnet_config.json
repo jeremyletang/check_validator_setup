@@ -32,9 +32,9 @@
 	},
 	{
 	    "name": "bharvest",
-	    "grpc": "vega-grpc.bharvest.io:3007",
-	    "gql": "https://vega-graphql.bharvest.io/query",
-	    "rest": "https://vega-rest.bharvest.io"
+	    "grpc": "vega-data.bharvest.io:3007",
+	    "gql": "https://vega-data.bharvest.io/graphql",
+	    "rest": "https://vega-data.bharvest.io"
 	},
 	{
 	    "name": "nodesguru",
