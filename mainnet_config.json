@@ -85,6 +85,12 @@
 	    "rest": "http://graphqlvega.gpvalidator.com:3008"
 	},
 	{
+	    "name": "pathrock",
+	    "grpc": "datanode.vega.pathrocknetwork.org:3007",
+	    "gql": "https://datanode.vega.pathrocknetwork.org/graphql",
+	    "rest": "https://datanode.vega.pathrocknetwork.org/"
+	},
+	{
 	    "name": "darling",
 	    "grpc": "darling.network:3007",
 	    "gql": "https://darling.network/graphql",
