@@ -101,6 +101,12 @@
 	    "grpc": "tls://vega-grpc.aurora-edge.com:443",
 	    "gql": "https://vega.aurora-edge.com/graphql",
 	    "rest": "https://vega.aurora-edge.com"
+	},
+	{
+	    "name": "mainnet-community",
+	    "grpc": "tls://grpc.vega.mainnet.community:443",
+	    "gql": "https://vega.mainnet.community/graphql",
+	    "rest": "https://vega.mainnet.community"
 	}
     ]
 }
